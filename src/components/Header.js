@@ -16,6 +16,9 @@ function Header() {
         <Link className="nav-link active" to="/Logouts">
           Logouts
         </Link>
+        <Link className="nav-link active" to="/SignUp">
+          SignUp
+        </Link>
       </div>
     </nav>
   );

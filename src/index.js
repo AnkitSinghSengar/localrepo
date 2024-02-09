@@ -14,7 +14,8 @@ import GroupChat from "./components/GroupChat";
 import Logouts from "./components/Logouts";
 import ManageUsers from "./components/ManageUsers";
 import ManageDocuments from "./components/ManageDocuments";
-import App from "./App";
+// import App from "./App";
+import SignUp from "./components/SignUp";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -23,6 +24,7 @@ const router = createBrowserRouter(
       <Route path="ManageUsers" element={<ManageUsers />} />
       <Route path="ManageDocuments" element={<ManageDocuments />} />
       <Route path="Logouts" element={<Logouts />} />
+      <Route path="SignUp" element={<SignUp />} />
     </Route>
   )
 );
@@ -31,6 +33,5 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
-    <App />
   </React.StrictMode>
 );
