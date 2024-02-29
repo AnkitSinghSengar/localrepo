@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
-
 import SecondModal from "../SecondModal";
 import Modal from "../Modal";
 import ThirdModal from "../ThirdModal";
+import { Link } from "react-router-dom";
+import Header from "./Header";
 
 const ManageDocuments = () => {
   const [data, setData] = useState([]);
@@ -20,9 +21,13 @@ const ManageDocuments = () => {
       }
       // Move the code for setting initial data outside the conditional check
       const initialData = [
-        { id: 1, name: "Text User", email: "textuser@gmail.com" },
-        { id: 2, name: "Anne Hunter", email: "anne.hunter@mail.com" },
-        { id: 3, name: "Jale Boser", email: "jale@yahoo.com" },
+        { id: 1, label: "Sales Report", fileName: "sales-Sep2014.xls" },
+        { id: 2, label: "Quaterly Summary", fileName: "SummaryQ4-2014.ppt" },
+        {
+          id: 3,
+          label: "Projection 2013-14",
+          fileName: "SalesProfitProjection.xls",
+        },
       ];
       setData(initialData);
       localStorage.setItem("myData", JSON.stringify(initialData));
@@ -67,16 +72,13 @@ const ManageDocuments = () => {
     setShowEditModal(false);
   };
 
-  const handleShare = () => {
-    alert("Documents are shared");
-  };
-
   const handleSave = () => {
     alert("File Changes Saved");
   };
 
   return (
     <div>
+      <Header />
       {data.length > 0 && (
         <>
           <h2>My Uploads</h2>
@@ -84,13 +86,13 @@ const ManageDocuments = () => {
             <div className="column">
               <h3>Label</h3>
               {data.map((item) => (
-                <p key={item.id}>{item.name}</p>
+                <p key={item.id}>{item.label}</p>
               ))}
             </div>
             <div className="column">
               <h3>File Name</h3>
               {data.map((item) => (
-                <p key={item.id}>{item.email}</p>
+                <p key={item.id}>{item.fileName}</p>
               ))}
             </div>
             <div className="column">
@@ -99,17 +101,20 @@ const ManageDocuments = () => {
                 <div key={item.id}>
                   <div style={{ marginBottom: "10px" }}>
                     <button onClick={() => handleEdit(item.id)}>Edit</button>
+
                     <span style={{ marginRight: "10px" }}></span>
                     <button onClick={() => handleDelete(item)}>Delete</button>
                     <span style={{ marginRight: "10px" }}></span>
-                    <button onClick={() => handleShare()}>Share</button>
+                    <Link to={`/share`}>
+                      <button>Share</button>
+                    </Link>
                   </div>
                 </div>
               ))}
             </div>
-            <div>
-              <button onClick={() => handleUpload()}>Add Upload</button>
-            </div>
+          </div>
+          <div>
+            <button onClick={() => handleUpload()}>Add Upload</button>
           </div>
         </>
       )}
@@ -120,7 +125,7 @@ const ManageDocuments = () => {
         onConfirm={handleConfirmUpload}
       />
       <Modal
-        p="Delete File"
+        paragraph="Delete File"
         isOpen={showDeleteModal}
         onCancel={handleCancelDelete}
         onConfirm={handleConfirmDelete}

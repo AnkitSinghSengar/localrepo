@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../App.css";
 import Modal from "../Modal";
+import { Link } from "react-router-dom";
+import Header from "./Header";
 
 const ManageUsers = () => {
   const [data, setData] = useState([]);
@@ -8,27 +9,15 @@ const ManageUsers = () => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    const fetchDataFromLocalStorage = () => {
-      const storedData = localStorage.getItem("myData");
-      if (storedData) {
-        setData(JSON.parse(storedData));
-      }
-      // Move the code for setting initial data outside the conditional check
-      const initialData = [
-        { id: 1, name: "Text User", email: "textuser@gmail.com" },
-        { id: 2, name: "Anne Hunter", email: "anne.hunter@mail.com" },
-        { id: 3, name: "Jale Boser", email: "jale@yahoo.com" },
-      ];
-      setData(initialData);
-      localStorage.setItem("myData", JSON.stringify(initialData));
-    };
+    // Retrieve data from local storage
+    const localStorageData = localStorage.getItem("userData");
 
-    fetchDataFromLocalStorage();
+    // Parse the data into an object
+    const parsedData = JSON.parse(localStorageData);
+
+    // Set the parsed data to state
+    setData(parsedData);
   }, []);
-
-  const handleEdit = (id) => {
-    console.log(`Edit item with id: ${id}`);
-  };
 
   const handleDelete = (user) => {
     setSelectedUser(user);
@@ -36,11 +25,17 @@ const ManageUsers = () => {
   };
 
   const handleConfirmDelete = () => {
-    const updatedData = data.filter((item) => item.id !== selectedUser.id);
-    localStorage.setItem("myData", JSON.stringify(updatedData));
+    const updatedData = { ...data };
+    const userId = Object.keys(updatedData).find(
+      (key) =>
+        updatedData[key].fullName === selectedUser.fullName &&
+        updatedData[key].email === selectedUser.email
+    );
+    delete updatedData[userId];
+    localStorage.setItem("userData", JSON.stringify(updatedData));
     setData(updatedData);
     setShowModal(false);
-    alert(`${selectedUser.name} deleted`);
+    alert(`${selectedUser.fullName} deleted`);
   };
 
   const handleCancelDelete = () => {
@@ -49,39 +44,41 @@ const ManageUsers = () => {
 
   return (
     <div>
-      {data.length > 0 && (
+      <Header />
+      {Object.keys(data).length > 0 && (
         <>
           <h2>Users</h2>
           <div className="container">
-            <div className="column">
-              <h3>Name</h3>
-              {data.map((item) => (
-                <p key={item.id}>{item.name}</p>
-              ))}
-            </div>
-            <div className="column">
-              <h3>User Email Id</h3>
-              {data.map((item) => (
-                <p key={item.id}>{item.email}</p>
-              ))}
-            </div>
-            <div className="column">
-              <h2>Actions</h2>
-              {data.map((item) => (
-                <div key={item.id}>
-                  <div style={{ marginBottom: "10px" }}>
-                    <button onClick={() => handleEdit(item.id)}>Edit</button>
-                    <span style={{ marginRight: "10px" }}></span>
-                    <button onClick={() => handleDelete(item)}>Delete</button>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Object.keys(data).map((key) => (
+                  <tr key={key}>
+                    <td>{data[key].fullName}</td>
+                    <td>{data[key].email}</td>
+                    <td>
+                      <Link to={`/edit/${key}`}>
+                        <button>Edit</button>
+                      </Link>
+                      <button onClick={() => handleDelete(data[key])}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </>
       )}
       <Modal
-        p="Are you sure you want to delete this user?"
+        paragraph="Are you sure you want to delete this user?"
         isOpen={showModal}
         onCancel={handleCancelDelete}
         onConfirm={handleConfirmDelete}

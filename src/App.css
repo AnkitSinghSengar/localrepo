@@ -48,3 +48,49 @@
   margin: 5px;
 }
 
+.App {
+  display: flex;
+  justify-content: center;
+   align-items: center;
+}
+.content{
+  display: flex;
+  justify-items: center;
+}
+.link{
+  background-color:cadetblue;
+  color: aliceblue;
+  height: 60;
+  width: 200;
+}
+.input{
+  border-width: 3px;
+  text-decoration: none;
+  margin: 8px;
+}
+.button{
+  background-color: aqua;
+  color: aliceblue;
+  font-size: large;
+  width: 10%;
+  height: 10%;
+  border-radius: 10px;
+
+}
+.login-button{
+  text-decoration: none;
+  color: black;
+}
+
+.styledContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formStyle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20;
+}

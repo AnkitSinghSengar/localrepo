@@ -1,24 +1,30 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("loggedInUserEmail");
+    navigate("/");
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="navbar-nav">
-        <Link className="nav-link active" to="/GroupChat">
+        <Link className="nav-link active" to="/login/login-success/group-chat">
           Group Chats
         </Link>
-        <Link className="nav-link active" to="/ManageUsers">
+        <Link className="nav-link active" to="/login/login-success/manage-user">
           Manage Users
         </Link>
-        <Link className="nav-link active" to="/ManageDocuments">
+        <Link
+          className="nav-link active"
+          to="/login/login-success/manage-document"
+        >
           Manage Documents
         </Link>
-        <Link className="nav-link active" to="/Logouts">
-          Logouts
-        </Link>
-        <Link className="nav-link active" to="/SignUp">
-          SignUp
-        </Link>
+        <button onClick={logout} className="nav-link active">
+          Logout
+        </button>
       </div>
     </nav>
   );
