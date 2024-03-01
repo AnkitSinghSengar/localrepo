@@ -9,20 +9,26 @@ function Header() {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="navbar-nav">
-        <Link className="nav-link active" to="/login/login-success/group-chat">
+      <div className="navbar-nav w-100 d-flex justify-content-between">
+        <Link
+          className="nav-link text-center"
+          to="/login/login-success/group-chat"
+        >
           Group Chats
         </Link>
-        <Link className="nav-link active" to="/login/login-success/manage-user">
+        <Link
+          className="nav-link text-center"
+          to="/login/login-success/manage-user"
+        >
           Manage Users
         </Link>
         <Link
-          className="nav-link active"
+          className="nav-link text-center"
           to="/login/login-success/manage-document"
         >
           Manage Documents
         </Link>
-        <button onClick={logout} className="nav-link active">
+        <button onClick={logout} className="nav-link btn btn-link">
           Logout
         </button>
       </div>
