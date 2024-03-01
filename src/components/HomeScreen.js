@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 function HomeScreen() {
   return (
     <div>
+      <h1>Hello</h1>
       <div className="styledContainer">
         <Heading children="Welcome to Users Module" />
       </div>
